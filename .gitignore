@@ -1,0 +1,51 @@
+# Environment variables (may contain API keys)
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.log
+
+# Node modules (if using JavaScript tooling)
+node_modules/
+
+# Python cache (if using Python tooling)
+__pycache__/
+*.pyc
+*.pyo
+
+# Build outputs (if applicable)
+dist/
+build/
+*.o
+*.exe
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Secrets (NEVER commit)
+*.pem
+*.key
+credentials.json
+secrets/
+
+# Personal notes (keep local only)
+NOTES.md
+TODO.md
+
+# Archive directories (optional — some teams commit archives, others don't)
+# Uncomment to exclude archives from git:
+# */archive/
