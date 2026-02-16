@@ -1,0 +1,141 @@
+{
+  "name": "product-development",
+  "version": "1.0.0",
+  "description": "Elite product development workflow — model-agnostic, tier-based, process-first",
+  
+  "agents": {
+    "orchestrator": {
+      "model": "${OPENCODE_ORCHESTRATOR_MODEL:-anthropic/claude-sonnet-4-5}",
+      "mode": "primary",
+      "description": "Central routing and state management"
+    },
+    "strategist": {
+      "model": "${OPENCODE_STRATEGIST_MODEL:-anthropic/claude-opus-4-6}",
+      "description": "Planning and architecture decisions"
+    },
+    "builder": {
+      "model": "${OPENCODE_BUILDER_MODEL:-openai/gpt-5-3-codex}",
+      "mode": "primary",
+      "description": "Implementation with TDD"
+    },
+    "reviewer": {
+      "model": "${OPENCODE_REVIEWER_MODEL:-moonshotai/kimi-k2-thinking}",
+      "description": "Cross-model code review"
+    },
+    "analyst": {
+      "model": "${OPENCODE_ANALYST_MODEL:-deepseek/deepseek-v3-2-exp}",
+      "description": "Investigation and learning"
+    },
+    "writer": {
+      "model": "${OPENCODE_WRITER_MODEL:-anthropic/claude-sonnet-4-5}",
+      "description": "Documentation and synthesis"
+    }
+  },
+  
+  "commands": {
+    "explore": {
+      "file": ".opencode/commands/explore.md",
+      "description": "Spike without code (NO CODE exploration)",
+      "agent": "analyst",
+      "tier": "all"
+    },
+    "plan": {
+      "file": ".opencode/commands/plan.md",
+      "description": "Turn issue into executable plan",
+      "agent": "strategist",
+      "tier": "all"
+    },
+    "build": {
+      "file": ".opencode/commands/build.md",
+      "description": "Implement with TDD (small batches)",
+      "agent": "builder",
+      "tier": "all"
+    },
+    "review": {
+      "file": ".opencode/commands/review.md",
+      "description": "Cross-model code review (SHIP/REVISE/BLOCK)",
+      "agent": "reviewer",
+      "tier": "all"
+    },
+    "retro": {
+      "file": ".opencode/commands/retro.md",
+      "description": "Postmortem learning (5 Whys)",
+      "agent": "analyst",
+      "tier": "all"
+    },
+    "rfc": {
+      "file": ".opencode/commands/rfc.md",
+      "description": "Architecture decision record (ADR)",
+      "agent": "strategist",
+      "tier": "team"
+    },
+    "handoff": {
+      "file": ".opencode/commands/handoff.md",
+      "description": "Context transfer (SBAR format)",
+      "agent": "writer",
+      "tier": "team"
+    }
+  },
+  
+  "config": {
+    "tier": {
+      "file": "config/TIER.md",
+      "description": "Project tier: solo / team / enterprise"
+    },
+    "peer_review": {
+      "file": "config/PEER_REVIEW.md",
+      "description": "Reviewer model configuration (cross-model requirement)"
+    },
+    "working_agreements": {
+      "file": "config/WORKING_AGREEMENTS.md",
+      "description": "Team conventions and standards"
+    }
+  },
+  
+  "artifacts": {
+    "backlog": {
+      "issues": "backlog/issues/",
+      "explorations": "backlog/explorations/"
+    },
+    "plans": "plans/",
+    "decisions": "decisions/",
+    "rfcs": "rfcs/",
+    "handoffs": "handoffs/",
+    "retros": "retros/",
+    "knowledge": "knowledge/"
+  },
+  
+  "templates": {
+    "issue": "templates/ISSUE_TEMPLATE.md",
+    "plan": "templates/PLAN_TEMPLATE.md",
+    "adr": "templates/ADR_TEMPLATE.md",
+    "rfc": "templates/RFC_TEMPLATE.md",
+    "handoff": "templates/HANDOFF_TEMPLATE.md",
+    "retro": "templates/RETRO_TEMPLATE.md"
+  },
+  
+  "verification": {
+    "enabled": true,
+    "cross_model_review": true,
+    "minimum_reviewers": 1
+  },
+  
+  "env": {
+    "required": [],
+    "optional": [
+      "OPENCODE_ORCHESTRATOR_MODEL",
+      "OPENCODE_STRATEGIST_MODEL",
+      "OPENCODE_BUILDER_MODEL",
+      "OPENCODE_REVIEWER_MODEL",
+      "OPENCODE_ANALYST_MODEL",
+      "OPENCODE_WRITER_MODEL"
+    ]
+  },
+  
+  "notes": {
+    "model_agnostic": "All model references use environment variables with sensible defaults",
+    "portability": "Works with OpenCode, Cursor, Claude Code (markdown commands)",
+    "tier_system": "Solo (5 commands) → Small Team (7 commands) → Enterprise (stricter gates)",
+    "cross_model_review": "Reviewer MUST use different model than Builder (Tier 2+)"
+  }
+}
